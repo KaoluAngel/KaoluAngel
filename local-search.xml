@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  
+  
+  
+  <entry>
+    <title>second_test</title>
+    <link href="/posts/42609.html"/>
+    <url>/posts/42609.html</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title></title>
+    <link href="/posts/1.html"/>
+    <url>/posts/1.html</url>
+    
+    <content type="html"><![CDATA[<h1 id=""><a href="#" class="headerlink" title=""></a></h1>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>spark笔记</title>
+    <link href="/posts/6152.html"/>
+    <url>/posts/6152.html</url>
+    
+    <content type="html"><![CDATA[<h2 id="RDD的创建"><a href="#RDD的创建" class="headerlink" title="RDD的创建"></a>RDD的创建</h2><p>RDD的创建</p><h2 id="RDD操作"><a href="#RDD操作" class="headerlink" title="RDD操作"></a>RDD操作</h2><h3 id="转换操作（Transformation）"><a href="#转换操作（Transformation）" class="headerlink" title="转换操作（Transformation）"></a>转换操作（Transformation）</h3><h4 id="01"><a href="#01" class="headerlink" title="01"></a>01</h4><p>对RDD而言，每一次转换操作都会产生不同的RDD（RDD是只读的，每次转换生成新的RDD）</p><img src="/posts/6152/image-20211207212513205.png" class="" title="image-20211207212513205"><h4 id="02"><a href="#02" class="headerlink" title="02"></a>02</h4><p>惰性机制：转换操作只记录转换的轨迹，并不发生计算！直到遇到行动操作才真正进行计算</p><h4 id="RDD常用转换操作"><a href="#RDD常用转换操作" class="headerlink" title="RDD常用转换操作"></a>RDD常用转换操作</h4><h5 id="filter-func"><a href="#filter-func" class="headerlink" title="filter(func)"></a>filter(func)</h5><p>筛选出满足函数func的元素，并返回一个新的数据集。</p><img src="/posts/6152/image-20211207213634256.png" class="" title="image-20211207213634256"><h5 id="map-func"><a href="#map-func" class="headerlink" title="map(func)"></a>map(func)</h5><p>一对一的映射</p><p>将每个元素传递到函数func中，并将结果返回为一个新的数据集。</p><p>（把RDD中每个[行]元素丢进func中处理，得到另<strong>一个</strong>元素[与flatMap()区别]）</p><h6 id="eg-每个学生分数-5分"><a href="#eg-每个学生分数-5分" class="headerlink" title="eg.每个学生分数+5分"></a>eg.每个学生分数+5分</h6><img src="/posts/6152/image-20211207213950129.png" class="" title="image-20211207213950129"><h6 id="e-g每行元素按空格进行分拆-（得到的是个列表类型）"><a href="#e-g每行元素按空格进行分拆-（得到的是个列表类型）" class="headerlink" title="e.g每行元素按空格进行分拆 （得到的是个列表类型）"></a>e.g每行元素按空格进行分拆 （得到的是个列表类型）</h6><img src="/posts/6152/image-20211207214201982.png" class="" title="image-20211207214201982"><h5 id="flatMap-func"><a href="#flatMap-func" class="headerlink" title="flatMap(func)"></a>flatMap(func)</h5><p>与map()相似，但每个输入元素都可以映射到<strong>0或多个</strong>输出结果</p><h6 id="e-g-可用于词名统计"><a href="#e-g-可用于词名统计" class="headerlink" title="e.g (可用于词名统计)"></a>e.g (可用于词名统计)</h6><p>flatMap ==.map()+拍扁(flat)  即 把map()操作后的结果(List类型)拍扁成单个单个的单词(str) [flatMap()的结果中每个元素是单个的(str)]</p><img src="/posts/6152/image-20211207214627837.png" class="" title="image-20211207214627837"><h5 id="groupByKey"><a href="#groupByKey" class="headerlink" title="groupByKey()"></a>groupByKey()</h5><p>应用于(K,V)键值对的数据集时，返回一个新的(K,<strong>Iterable</strong>)形式的数据集</p><img src="/posts/6152/image-20211209151645755.png" class="" title="image-20211209151645755"><h5 id="reduceByKey-func"><a href="#reduceByKey-func" class="headerlink" title="reduceByKey(func)"></a>reduceByKey(func)</h5><p>应用于(K,V)键值对的数据集时，返回一个新的(K,V)形式的数据集,<strong>其中每个值是将每个key传递到函数func中进行聚合后的结果</strong></p><p>相当于 把groupByKey()得到的结果中的Iterable列表再传给func()处理</p><h6 id="e-g-reduceByKey-lambda-x-y-x-y"><a href="#e-g-reduceByKey-lambda-x-y-x-y" class="headerlink" title="e.g. reduceByKey(lambda x,y : x+y)"></a>e.g. reduceByKey(lambda x,y : x+y)</h6><img src="/posts/6152/image-20211209152436135.png" class="" title="image-20211209152436135"><img src="/posts/6152/image-20211209152554479.png" class="" title="image-20211209152554479"><h3 id="行动操作（Action）"><a href="#行动操作（Action）" class="headerlink" title="行动操作（Action）"></a>行动操作（Action）</h3><h4 id="ps"><a href="#ps" class="headerlink" title="ps"></a>ps</h4><p>惰性机制：转换操作只记录转换的轨迹，并不发生计算！直到遇到行动操作才真正进行计算</p><h4 id="count-返回数据集中的元素个数"><a href="#count-返回数据集中的元素个数" class="headerlink" title="count() 返回数据集中的元素个数"></a>count() 返回数据集中的元素个数</h4><img src="/posts/6152/image-20211209153831044.png" class="" title="image-20211209153831044"><h4 id="collect-以数组的形式返回数据集中的所有元素"><a href="#collect-以数组的形式返回数据集中的所有元素" class="headerlink" title="collect() 以数组的形式返回数据集中的所有元素"></a>collect() 以数组的形式返回数据集中的所有元素</h4><img src="/posts/6152/image-20211209153820540.png" class="" title="image-20211209153820540"><h4 id="first-返回数据集中的第一个元素"><a href="#first-返回数据集中的第一个元素" class="headerlink" title="first() 返回数据集中的第一个元素"></a>first() 返回数据集中的第一个元素</h4><img src="/posts/6152/image-20211209153841600.png" class="" title="image-20211209153841600"><h4 id="take-n-以数组的形式返回数据集中的前n个元素"><a href="#take-n-以数组的形式返回数据集中的前n个元素" class="headerlink" title="take(n) 以数组的形式返回数据集中的前n个元素"></a>take(n) 以数组的形式返回数据集中的前n个元素</h4><h4 id="reduce-func-通过func-输入两个参数并返回一个值-聚合数据集中的元素"><a href="#reduce-func-通过func-输入两个参数并返回一个值-聚合数据集中的元素" class="headerlink" title="reduce(func) 通过func(输入两个参数并返回一个值)聚合数据集中的元素"></a>reduce(func) 通过func(输入两个参数并返回一个值)<strong>聚合</strong>数据集中的元素</h4><img src="/posts/6152/image-20211209153802549.png" class="" title="image-20211209153802549"><h5 id="e-g-func-lamda-a-b-a-b"><a href="#e-g-func-lamda-a-b-a-b" class="headerlink" title="e.g.func : lamda  a,b :a+b"></a>e.g.func : lamda  a,b :a+b</h5><img src="/posts/6152/image-20211209153636617.png" class="" title="image-20211209153636617"><h4 id="foreach-func-将数据集中的每个元素传递到函数func-中运行"><a href="#foreach-func-将数据集中的每个元素传递到函数func-中运行" class="headerlink" title="foreach(func) 将数据集中的每个元素传递到函数func()中运行"></a>foreach(func) 将数据集中的每个元素传递到函数func()中运行</h4><h5 id="e-g"><a href="#e-g" class="headerlink" title="e.g."></a>e.g.</h5><img src="/posts/6152/image-20211209153734674.png" class="" title="image-20211209153734674"><h3 id="惰性机制"><a href="#惰性机制" class="headerlink" title="惰性机制"></a>惰性机制</h3><h4 id="惰性机制：转换操作只记录转换的轨迹，并不发生计算！直到遇到行动操作才真正进行计算"><a href="#惰性机制：转换操作只记录转换的轨迹，并不发生计算！直到遇到行动操作才真正进行计算" class="headerlink" title="惰性机制：转换操作只记录转换的轨迹，并不发生计算！直到遇到行动操作才真正进行计算"></a>惰性机制：转换操作只记录转换的轨迹，并不发生计算！直到遇到行动操作才真正进行计算</h4><h4 id="e-g-如图-加载数据的操作-textFile-“…”-和-map-func-仅被记录下来-不会被真正计算-直到遇到-reduce-行动操作"><a href="#e-g-如图-加载数据的操作-textFile-“…”-和-map-func-仅被记录下来-不会被真正计算-直到遇到-reduce-行动操作" class="headerlink" title="e.g. 如图,加载数据的操作 .textFile(“…”) 和.map(func) 仅被记录下来,不会被真正计算,直到遇到.reduce()(行动操作)!!!!"></a>e.g. 如图,加载数据的操作 .textFile(“…”) 和.map(func) 仅被记录下来,不会被真正计算,直到遇到.reduce()<strong>(行动操作)</strong>!!!!</h4><img src="/posts/6152/image-20211209154113528.png" class="" title="image-20211209154113528"><h2 id="持久化"><a href="#持久化" class="headerlink" title="持久化"></a>持久化</h2><h2 id="分区"><a href="#分区" class="headerlink" title="分区"></a>分区</h2>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>first_test</title>
+    <link href="/posts/34901.html"/>
+    <url>/posts/34901.html</url>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="/posts/16107.html"/>
+    <url>/posts/16107.html</url>
+    
+    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo new <span class="hljs-string">&quot;My New Post&quot;</span><br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo server<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo generate<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo deploy<br></code></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  
+</search>
